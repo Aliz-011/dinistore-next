@@ -3,14 +3,28 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import { Store } from '../utils/Store';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { signOut, useSession } from 'next-auth/react';
+import { Menu } from '@headlessui/react';
+import DropdownLink from './DropdownLink';
+import Cookies from 'js-cookie';
 
 const Layout = ({ title, children }) => {
+  const { status, data: session } = useSession();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
+
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
+
+  const logout = () => {
+    Cookies.remove('cart');
+    dispatch({ type: 'CART_RESET' });
+    signOut({ callbackUrl: '/login' });
+  };
   return (
     <>
       <Head>
@@ -19,20 +33,25 @@ const Layout = ({ title, children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <ToastContainer position="top-center" />
+
       <div className="flex min-h-screen px-24 py-4 flex-col justify-between">
         <header>
-          <nav class="bg-white border-gray-200 dark:bg-gray-900 pb-4">
-            <div class="flex flex-wrap justify-between items-center">
-              <Link href="/" class="flex items-center text-xl font-semibold">
+          <nav className="bg-white border-gray-200 dark:bg-gray-900 pb-4">
+            <div className="flex flex-wrap justify-between items-center">
+              <Link
+                href="/"
+                className="flex items-center text-xl font-semibold"
+              >
                 dini
-                <span class="self-center font-bold text-yellow-400 whitespace-nowrap dark:text-white">
+                <span className="self-center font-bold text-yellow-400 whitespace-nowrap dark:text-white">
                   store
                 </span>
               </Link>
-              <div class="flex gap-3">
+              <div className="flex gap-3">
                 <a
                   href="tel:082238901104"
-                  class="text-sm font-medium text-gray-500 dark:text-white hover:underline"
+                  className="text-sm font-medium text-gray-500 dark:text-white hover:underline"
                 >
                   (+62) 8223-8910-104
                 </a>
@@ -44,12 +63,46 @@ const Layout = ({ title, children }) => {
                     </span>
                   )}
                 </Link>
-                <Link
-                  href="/"
-                  class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Login
-                </Link>
+
+                {status === 'loading' ? (
+                  'Loading'
+                ) : session?.user ? (
+                  <Menu as="div" className="relative inline-block">
+                    <Menu.Button className="text-blue-600 capitalize font-semibold">
+                      {session.user.name}
+                    </Menu.Button>
+                    <Menu.Items className="absolute right-0 origin-top-right shadow-lg bg-white w-80 border rounded">
+                      <Menu.Item>
+                        <DropdownLink className="dropdown-link" href="/profile">
+                          Profile
+                        </DropdownLink>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <DropdownLink
+                          className="dropdown-link"
+                          href="/order-history"
+                        >
+                          Order History
+                        </DropdownLink>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <span
+                          className="dropdown-link cursor-pointer"
+                          onClick={logout}
+                        >
+                          Logout
+                        </span>
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Menu>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             </div>
           </nav>
@@ -58,15 +111,15 @@ const Layout = ({ title, children }) => {
         <main>{children}</main>
 
         <footer className="bg-white dark:bg-gray-900">
-          <div class="sm:flex sm:items-center sm:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+          <div className="sm:flex sm:items-center sm:justify-between">
+            <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
               © 2022{' '}
-              <a href="https://flowbite.com/" class="hover:underline">
+              <a href="https://flowbite.com/" className="hover:underline">
                 Flowbite™
               </a>
               . All Rights Reserved.
             </span>
-            <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+            <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
               <a
                 href="#"
                 class="text-gray-500 hover:text-gray-900 dark:hover:text-white"
