@@ -1,18 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
 import Layout from '../../components/Layout';
 import data from '../../utils/data';
+import { Store } from '../../utils/Store';
 import { ChevronLeftIcon, StarIcon } from '@heroicons/react/24/outline';
 
 const ProductDetails = () => {
+  const router = useRouter();
+  const { state, dispatch } = useContext(Store);
+
   const { query } = useRouter();
   const { slug } = query;
   const product = data.products.find((x) => x.slug === slug);
   if (!product) {
     return <div>Product not found</div>;
   }
+
+  const addToCart = () => {
+    const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    if (product.countInStock < quantity) {
+      alert('sorry, product out of stock');
+      return;
+    }
+
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart');
+  };
+
   return (
     <Layout title={product.name}>
       <div className="py-2">
@@ -53,7 +71,9 @@ const ProductDetails = () => {
               <p className="font-bold">Status</p>
               <div> {product.countInStock > 0 ? 'Tersedia' : 'Habis '} </div>
             </div>
-            <button className=" primary-button w-full">Add to cart</button>
+            <button className=" primary-button w-full" onClick={addToCart}>
+              Add to cart
+            </button>
           </div>
         </div>
       </div>

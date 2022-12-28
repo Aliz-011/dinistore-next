@@ -1,8 +1,16 @@
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useContext, useEffect, useState } from 'react';
+import { Store } from '../utils/Store';
 
 const Layout = ({ title, children }) => {
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems]);
   return (
     <>
       <Head>
@@ -15,15 +23,12 @@ const Layout = ({ title, children }) => {
         <header>
           <nav class="bg-white border-gray-200 dark:bg-gray-900 pb-4">
             <div class="flex flex-wrap justify-between items-center">
-              <a
-                href="https://flowbite.com"
-                class="flex items-center text-xl font-semibold"
-              >
+              <Link href="/" class="flex items-center text-xl font-semibold">
                 dini
                 <span class="self-center font-bold text-yellow-400 whitespace-nowrap dark:text-white">
                   store
                 </span>
-              </a>
+              </Link>
               <div class="flex gap-3">
                 <a
                   href="tel:082238901104"
@@ -31,7 +36,14 @@ const Layout = ({ title, children }) => {
                 >
                   (+62) 8223-8910-104
                 </a>
-                <ShoppingBagIcon className="w-5 h-6" />
+                <Link href="/cart" className="relative flex">
+                  <ShoppingBagIcon className="w-6 h-6" />
+                  {cartItemsCount > 0 && (
+                    <span className="rounded-full bg-red-500 px-[6px] py-[2px] -top-1 -right-[6px] absolute text-xs font-bold text-white">
+                      {cartItemsCount}
+                    </span>
+                  )}
+                </Link>
                 <Link
                   href="/"
                   class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline"
