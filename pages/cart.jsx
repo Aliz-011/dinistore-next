@@ -22,7 +22,7 @@ const Cart = () => {
 
   const updateCart = async (item, qty) => {
     const quantity = Number(qty);
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
       return toast.error('sorry, product is out of stock');
     }

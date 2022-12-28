@@ -27,7 +27,7 @@ const Payment = () => {
       })
     );
 
-    router.push('/order');
+    router.push('/placeorder');
   };
 
   useEffect(() => {

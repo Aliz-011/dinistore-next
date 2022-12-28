@@ -22,7 +22,7 @@ const PlaceOrder = () => {
     cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
 
-  const shippingPrice = itemsPrice > 150000 ? 10000 : 0;
+  const shippingPrice = itemsPrice > 300000 ? 0 : 15000;
   const taxPrice = round2(itemsPrice * 0.1);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
 
@@ -56,9 +56,9 @@ const PlaceOrder = () => {
         })
       );
       router.push(`/order/${data._id}`);
-    } catch (error) {
+    } catch (err) {
       setLoading(false);
-      toast.error(getError(error));
+      toast.error(getError(err));
     }
   };
 
@@ -174,7 +174,7 @@ const PlaceOrder = () => {
                   onClick={handleOrder}
                   className="primary-button w-full"
                 >
-                  {loading ? 'Loading' : 'Bayar'}
+                  {loading ? 'Loading...' : 'Bayar'}
                 </button>
               </li>
             </ul>
@@ -185,6 +185,6 @@ const PlaceOrder = () => {
   );
 };
 
-export default PlaceOrder;
-
 PlaceOrder.auth = true;
+
+export default PlaceOrder;
