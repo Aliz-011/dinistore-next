@@ -19,7 +19,7 @@ const data = {
     {
       name: 'Brownies',
       slug: 'brownies',
-      category: ['cake', 'sweets'],
+      category: 'cake',
       img: 'https://firebasestorage.googleapis.com/v0/b/dinistore-b41e5.appspot.com/o/images%2Fbrownieswaktuulangtahun.jpeg?alt=media&token=a479798c-a200-48ac-b29e-520b77ee50eb',
       price: 140000,
       rating: 4.8,
@@ -30,7 +30,7 @@ const data = {
     {
       name: 'Pie Buah',
       slug: 'pie-buah',
-      category: ['snack', 'sweets', 'fruit'],
+      category: 'snack',
       img: 'https://firebasestorage.googleapis.com/v0/b/dinistore-b41e5.appspot.com/o/images%2FResep-Pie-Buah.jpeg?alt=media&token=6110310b-c562-4b11-b478-c6d565a8faf2',
       price: 8000,
       rating: 4.5,
@@ -41,7 +41,7 @@ const data = {
     {
       name: 'Risoles',
       slug: 'risoles',
-      category: ['snack', 'salts'],
+      category: 'snack',
       img: 'https://firebasestorage.googleapis.com/v0/b/dinistore-b41e5.appspot.com/o/images%2Frisoles.jpeg?alt=media&token=027b2cb2-0013-419a-bc74-8a6fdbbf9fa6',
       price: 4000,
       rating: 4.8,
@@ -52,7 +52,7 @@ const data = {
     {
       name: 'Donat',
       slug: 'donat',
-      category: ['snack', 'sweets'],
+      category: 'snack',
       img: 'https://firebasestorage.googleapis.com/v0/b/dinistore-b41e5.appspot.com/o/images%2Fdonat.jpeg?alt=media&token=e3b40c19-651f-4ec0-86a0-200a12ae5036',
       price: 5000,
       rating: 4.7,
@@ -63,7 +63,7 @@ const data = {
     {
       name: 'Bakpao',
       slug: 'bakpao',
-      category: ['snack', 'sweets', 'salts'],
+      category: 'snack',
       img: 'https://firebasestorage.googleapis.com/v0/b/dinistore-b41e5.appspot.com/o/images%2Fimages_mancanegara_dim-sum_bakpao-ayam.jpeg?alt=media&token=808ccaab-cb5e-4e36-b1e8-91db6e7b3d61',
       price: 5000,
       rating: 4.8,
@@ -74,7 +74,7 @@ const data = {
     {
       name: 'Rainbow Cake',
       slug: 'rainbow-cake',
-      category: ['cake', 'sweets'],
+      category: 'cake',
       img: 'https://firebasestorage.googleapis.com/v0/b/dinistore-b41e5.appspot.com/o/images%2Frainbow-cake-foto-resep-utama.jpeg?alt=media&token=13f6b34d-34b2-4a71-aea9-6bd0fa3d882a',
       price: 150000,
       rating: 4.8,

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { XCircleIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
   const router = useRouter();
@@ -18,9 +20,14 @@ const Cart = () => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
 
-  const updateCart = (item, qty) => {
+  const updateCart = async (item, qty) => {
     const quantity = Number(qty);
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock < quantity) {
+      return toast.error('sorry, product is out of stock');
+    }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    toast.success('Product updated to the cart');
   };
 
   return (
