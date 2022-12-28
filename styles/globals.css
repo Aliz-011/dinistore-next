@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .card {
-  @apply mb-5 block rounded-lg border border-gray-200 shadow-md h-96 pb-4;
+  @apply mb-5 block rounded-lg border border-gray-200 shadow-md;
 }
 
 .primary-button {

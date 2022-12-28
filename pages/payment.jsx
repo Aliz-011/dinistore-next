@@ -26,6 +26,8 @@ const Payment = () => {
         paymentMethod: selectedPaymentMethod,
       })
     );
+
+    router.push('/order');
   };
 
   useEffect(() => {
@@ -71,3 +73,5 @@ const Payment = () => {
 };
 
 export default Payment;
+
+Payment.auth = true;

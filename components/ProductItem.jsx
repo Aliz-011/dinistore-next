@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const ProductItem = ({ product, addToCart }) => {
   return (
-    <div className="card">
+    <div className="card pb-8">
       <Link href={`/product/${product.slug}`}>
         <img
           src={product.img}
