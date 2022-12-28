@@ -117,8 +117,11 @@ const Login = () => {
           Submit
         </button>
         <div className="mb-6">
-          Do not have an account?&nbsp;
-          <Link href="/register" className="underline">
+          Do not have an account, yet?&nbsp;
+          <Link
+            href={`/register?redirect=${redirect || '/'}`}
+            className="underline"
+          >
             Register here.
           </Link>
         </div>
